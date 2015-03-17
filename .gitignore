@@ -1,0 +1,10 @@
+bin/
+include/
+lib/
+local/
+*.pyc
+.idea/
+*.egg-info/
+etc/
+var/
+pip-selfcheck.json
