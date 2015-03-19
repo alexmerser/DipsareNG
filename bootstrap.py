@@ -77,8 +77,10 @@ class EnvConfig(object):
 
 	@property
 	def extra(self):
-		extra = {attr: dict(value) for attr, value in self.__dict__.iteritems() if
-				 attr not in ["_env", "_packages", "_parts"]}
+		extra = {
+			attribute: dict(value) for attribute, value in self.__dict__.iteritems() if
+			attribute not in ["_env", "_packages", "_parts"]
+		}
 		print extra
 		return extra
 
