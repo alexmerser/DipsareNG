@@ -133,37 +133,49 @@ class StackEnvBuilder(object):
 		for cmd in command_list:
 			cmd.execute()
 
+	@staticmethod
+	def _installed_pkg(pip):
+		cmd = BuildCommand(pip, 'freeze')
+		pkg_list = cmd.execute()
+		return str(pkg_list).split('\n')
+
+	# TODO 1: refactor this tones of ctrl-c/ctrl-v
+	# TODO 2: make install/update action related on package versions
 	def install_requirements(self):
 		config = self._parse_config()
 		pip = "bin/pip"
+		check_list = self._installed_pkg(pip)
+		print "Installed : %s" % check_list
 		package_list = config.packages
-		print "Install commons:\n"
+		to_install = []
+		to_update = []
 		for pkg in package_list['commons']:
-			cmd = BuildCommand(pip, pkg, 'install')
-			cmd.execute()
+			if pkg not in check_list:
+				to_install.append(pkg)
+			else:
+				to_update.append(pkg)
 
-		print "Install frameworks:\n"
 		for pkg in package_list['framework']:
-			cmd = BuildCommand(pip, pkg, 'install')
+			if pkg not in check_list:
+				to_install.append(pkg)
+			else:
+				to_update.append(pkg)
+
+		for pkg in package_list['develop']:
+			if pkg not in check_list:
+				to_install.append(pkg)
+			else:
+				to_update.append(pkg)
+
+		for pkg in to_install:
+			cmd = BuildCommand(pip, pkg, 'install', working_dir=os.environ.get('NODE_ROOT'))
 			cmd.execute()
 
-		print "Install develop:\n"
-		for pkg in package_list['develop']:
-			print pkg
-			cmd = BuildCommand(pip, pkg, 'install', working_dir=os.environ.get('NODE_ROOT'))
+		for pkg in to_update+to_install:
+			cmd = BuildCommand(pip, pkg, 'install --upgrade', working_dir=os.environ.get('NODE_ROOT'))
 			cmd.execute()
 
 if __name__ == '__main__':
 	builder = StackEnvBuilder()
 	builder.build()
 	builder.install_requirements()
-	# parser = ArgumentParser()
-	# parser.add_argument('-B', '--build', help='echo the string you use here')
-	# parser.add_argument('-U', '--update', help='echo the string you use here')
-	# parser.add_argument('-I', '--install', help='echo the string you use here')
-	# args = parser.parse_args()
-	#
-	# if args.build:
-	# 	builder.build()
-	# elif args.install:
-	# 	builder.install_requirements()
