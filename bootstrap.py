@@ -143,6 +143,7 @@ class StackEnvBuilder(object):
 
 	# TODO 1: refactor this tones of ctrl-c/ctrl-v
 	# TODO 2: make install/update action related on package versions
+	# TODO 3: make dev/user builds related to env_id generated for particular user
 	def install_requirements(self):
 		config = self._parse_config()
 		pip = "bin/pip"
@@ -173,7 +174,7 @@ class StackEnvBuilder(object):
 			cmd = BuildCommand(pip, pkg, 'install', working_dir=os.environ.get('NODE_ROOT'))
 			cmd.execute()
 
-		for pkg in to_update+to_install:
+		for pkg in to_update + to_install:
 			cmd = BuildCommand(pip, pkg, 'install --upgrade', working_dir=os.environ.get('NODE_ROOT'))
 			cmd.execute()
 
