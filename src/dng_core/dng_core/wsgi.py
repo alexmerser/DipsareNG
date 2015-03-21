@@ -3,7 +3,7 @@
 	Stack core WSGI module
 """
 from werkzeug.contrib.fixers import ProxyFix
-from sn_core import app
+from . import app
 
 app.wsgi_app = ProxyFix(app.wsgi_app)
 

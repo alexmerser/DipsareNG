@@ -1,8 +1,8 @@
 import os
 from setuptools import setup, find_packages
 
-__name__ = "sn_config"
-__version__ = 'dev0.0.1'
+__name__ = "dng_config"
+__version__ = '0.0.1'
 
 _path = os.path.abspath(os.path.dirname(__file__))
 _README = unicode(open(os.path.join(_path, 'README.rst')).read(), 'utf-8')

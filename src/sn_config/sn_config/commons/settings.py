@@ -1,7 +1,7 @@
 import os
 
 
-class NodeSettings(object):
+class BaseSettings(object):
 
     PROJECT = u"node-00"
 
@@ -33,7 +33,7 @@ class NodeSettings(object):
     # CACHE_REDIS_URL = u'redis://localhost:6379/0'
 
 
-class NodeDev(NodeSettings):
+class DevSettings(BaseSettings):
     # Dev/virtual conf
     # DEBUG = True
     # SQLALCHEMY_ECHO = True

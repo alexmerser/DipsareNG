@@ -1,4 +1,4 @@
-dng_config : TBD
+dng_core : core
 ===============
 
 Documentation TBD

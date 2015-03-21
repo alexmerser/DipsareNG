@@ -1,5 +1,5 @@
 from flask import jsonify
-from sn_core.commons.application import NodeServer
+from commons.application import NodeServer
 
 app = NodeServer(__name__)
 

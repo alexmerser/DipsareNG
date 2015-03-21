@@ -1,4 +1,4 @@
-from sn_core import app
+from . import app
 
 
 def main():

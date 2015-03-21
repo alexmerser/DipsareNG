@@ -1,5 +1,5 @@
 import os
-from sn_core.os_service.interface import IOsService
+from interface import IOsService
 
 
 class BaseService(IOsService):
