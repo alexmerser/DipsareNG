@@ -9,7 +9,7 @@ class ExtensionBuilder(object):
 	_settings = abstractproperty
 
 	@abstractmethod
-	def _validate(self):
+	def validate(self):
 		"""
 		TBD
 		"""

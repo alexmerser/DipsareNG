@@ -1,7 +1,7 @@
 from abc import ABCMeta, abstractmethod
 
 
-class IOsService(object):
+class IOService(object):
 	__metaclass__ = ABCMeta
 
 	@abstractmethod

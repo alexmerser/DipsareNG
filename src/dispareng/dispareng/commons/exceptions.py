@@ -1,4 +1,4 @@
-class BaseNodeException(Exception):
+class ApiException(Exception):
 	pass
 
 

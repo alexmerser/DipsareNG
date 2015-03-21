@@ -1,8 +1,8 @@
 import os
-from interface import IOsService
+from interface import IOService
 
 
-class BaseService(IOsService):
+class BaseService(IOService):
 	@classmethod
 	def _all(cls):
 		"""

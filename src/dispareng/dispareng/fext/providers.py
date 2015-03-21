@@ -1,11 +1,11 @@
 __all__ = ['ExtensionProvider']
 
-from sn_ext.commons import CoreExtension
+from commons import DNGExtension
 
 
 class ExtensionProvider(object):
 	"""
-
+	Provide validation on build for extensions
 	"""
 	def __init__(self, ext_name, ext_obj, ext_settings):
 		self._ext_name = ext_name
@@ -26,4 +26,4 @@ class ExtensionProvider(object):
 		:return:
 		"""
 		self._validate()
-		return CoreExtension(self._ext_name, self._object, self._settings)
+		return DNGExtension(self._ext_name, self._object, self._settings)

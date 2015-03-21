@@ -1,4 +1,0 @@
-dng_config : TBD
-===============
-
-Documentation TBD

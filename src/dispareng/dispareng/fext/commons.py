@@ -1,4 +1,4 @@
-class ExtensionSettings(object):
+class DExtSettings(object):
 	def __init__(self, version, version_code, description, author, email):
 		"""
 		Ext meta pkg data
@@ -10,7 +10,7 @@ class ExtensionSettings(object):
 		self._email = email
 
 
-class CoreExtension(object):
+class DNGExtension(object):
 	def __init__(self, name, instance=None, settings=None):
 		"""
 		:param name: unique extension name
@@ -31,7 +31,7 @@ class CoreExtension(object):
 		return self._name
 
 	def __repr__(self):
-		return u"CoreExt<%s>" % self._name
+		return u"DNGExt<%s>" % self._name
 
 
 class CoreExtensionsMap(object):
@@ -44,7 +44,7 @@ class CoreExtensionsMap(object):
 		"""
 		for item in args:
 			try:
-				assert isinstance(item, CoreExtension)
+				assert isinstance(item, DNGExtension)
 				self.__setattr__(u"_%s" % item.name, item)
 			except AssertionError:
 				continue
