@@ -1,0 +1,6 @@
+GLOBAL TO-DO LIST
+
+TODO `config` 1 : change all recipes files to JSON format to provide global capability level to settings
+TODO `config` 2 : dispareng setting related to recipes and env variables (build from last ???)
+
+TODO `global` 1 : improve bootstrapping
