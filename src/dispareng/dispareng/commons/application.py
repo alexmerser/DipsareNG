@@ -1,17 +1,17 @@
 from flask import Flask, Blueprint
 
 
-class NodeServer(Flask):
+class DServer(Flask):
     """ Override for future overriding """
 
 
-class NodeModule(Blueprint):
+class DServerModule(Blueprint):
     """ Override default blueprint """
 
 
-class StackApp(Flask):
+class DApp(Flask):
     """ Base class for application """
 
 
-class StackAppModule(Blueprint):
+class DAppModule(Blueprint):
     """ Base class for applications module """

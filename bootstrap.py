@@ -134,10 +134,11 @@ class StackEnvBuilder(object):
 
 		return True if installed.get(pkg_name, None) < current_version else False
 
-	# TODO 1: refactor this tones of ctrl-c/ctrl-v
+	# TODO 1: refactor this tones of ctrl-c/ctrl-v shit
 	# TODO 2: make install/update action related on package versions
 	# TODO 3: make dev/user builds related to env_id generated for particular user
 	def install_requirements(self):
+		os.environ.update({'DISPARENG_ENV': 'develop'})
 		config = self._parse_config()
 		pip = "bin/pip"
 		check_list = self._installed_pkg()

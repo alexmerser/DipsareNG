@@ -30,6 +30,10 @@ class DNGExtension(object):
 	def name(self):
 		return self._name
 
+	@property
+	def obj(self):
+		return self._instance
+
 	def __repr__(self):
 		return u"DNGExt<%s>" % self._name
 

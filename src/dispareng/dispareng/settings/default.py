@@ -2,9 +2,7 @@ import os
 
 PROJECT = u"dispareng"
 
-ROOT_PATH = os.environ[u'DISPARENG_ROOT']
-
-ENV_TYPE = os.environ[u'DISPARENG_ENV']
+ROOT_PATH = os.path.abspath(os.path.dirname(__file__)+'/../../../')
 
 DEBUG = False
 
