@@ -1,4 +1,4 @@
-dng_core : core
-===============
+dispareng : core
+================
 
 Documentation TBD

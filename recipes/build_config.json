@@ -18,7 +18,6 @@
       "var/log",
       "var/proc",
       "etc",
-      "etc/env",
       "apps"
     ]
   },
