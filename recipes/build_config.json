@@ -1,8 +1,8 @@
 {
   "env": {
     "env_url": "https://pypi.python.org/packages/source/v/virtualenv/",
-    "version": "virtualenv-12.0.7.",
-    "dist_ext": "tar.gz"
+    "version": "virtualenv-12.0.7",
+    "dist_ext": ".tar.gz"
 
   },
   "parts": {
@@ -72,11 +72,10 @@
       "tornado==4.1",
       "Werkzeug==0.10.1",
       "WTForms==2.0.2"
-    ]
-  },
-
-  "develop" : [
+    ],
+    "develop" : [
     "src/dispareng"
   ]
 
+  }
 }

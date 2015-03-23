@@ -1,6 +1,7 @@
 import os
-from subprocess import check_output
 from sys import stderr
+import json
+from subprocess import check_output
 from ConfigParser import SafeConfigParser
 
 
@@ -67,8 +68,7 @@ class EnvConfig(object):
 
 	@property
 	def packages(self):
-		pkg = getattr(self, '_packages', {})
-		return {k: v.split('\n') for k, v in dict(pkg).iteritems()}
+		return getattr(self, '_packages', {})
 
 	@property
 	def parts(self):
@@ -78,10 +78,9 @@ class EnvConfig(object):
 	@property
 	def extra(self):
 		extra = {
-			attribute: dict(value) for attribute, value in self.__dict__.iteritems() if
+			attribute: value for attribute, value in self.__dict__.iteritems() if
 			attribute not in ["_env", "_packages", "_parts"]
 		}
-		print extra
 		return extra
 
 
@@ -97,7 +96,7 @@ class StackEnvBuilder(object):
 			env.get('version', 'virtualenv-12.0.7'),
 			env.get('dist_ext', '.tar.gz')
 		)
-		default_dirs = config.extra['_dirs']['default'].split(',')
+		default_dirs = config.extra['_dirs']['default']
 		return [
 			BuildCommand(config.parts['wget'], env_url),
 			BuildCommand(config.parts['tar'], config.env.get('version', 'virtualenv-12.0.7')+'.tar.gz', 'xzfv'),
@@ -107,9 +106,10 @@ class StackEnvBuilder(object):
 		]
 
 	def _parse_config(self):
-		config_parser = BuildConfigParser()
-		config_parser.read(self.RECIPES + 'build_env.cfg')
-		config = EnvConfig(config_parser.as_dict())
+		# config_parser = BuildConfigParser()
+		# config_parser.read(self.RECIPES + 'build_config.json')
+		cfg = json.load(file(self.RECIPES + 'build_config.json'))
+		config = EnvConfig(cfg)
 		return config
 
 	def validate(self):
@@ -126,6 +126,9 @@ class StackEnvBuilder(object):
 	def build(self):
 		self.validate()
 		config = self._parse_config()
+		print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \n'
+		print type(config)
+		print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \n'
 		command_list = self._make_build_commands(config)
 		print "Build steps:"
 		for cmd in command_list:
