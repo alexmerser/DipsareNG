@@ -16,6 +16,8 @@
     "default": [
       "var",
       "var/log",
+      "var/log/supervisor",
+      "var/log/dbspath",
       "var/proc",
       "etc",
       "apps"

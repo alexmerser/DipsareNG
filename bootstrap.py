@@ -2,16 +2,6 @@ import os
 from sys import stderr
 import json
 from subprocess import check_output
-from ConfigParser import SafeConfigParser
-
-
-class BuildConfigParser(SafeConfigParser):
-	"""
-	Override for implement dict representation
-	"""
-
-	def as_dict(self):
-		return dict(self._sections)
 
 
 class BuildCommand():
@@ -106,19 +96,13 @@ class StackEnvBuilder(object):
 		]
 
 	def _parse_config(self):
-		# config_parser = BuildConfigParser()
-		# config_parser.read(self.RECIPES + 'build_config.json')
 		cfg = json.load(file(self.RECIPES + 'build_config.json'))
 		config = EnvConfig(cfg)
 		return config
 
 	def validate(self):
-		print "Validation pass \n"
-		print "Check config :"
-		cf = open(self.RECIPES + 'build_env.cfg')
-		conf_file = cf.readlines()
-		for l in conf_file:
-			print l
+		print "Validation \n"
+		json.load(file(self.RECIPES + 'build_config.json'))
 
 	def rebuild(self):
 		raise NotImplementedError
@@ -126,23 +110,29 @@ class StackEnvBuilder(object):
 	def build(self):
 		self.validate()
 		config = self._parse_config()
-		print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \n'
-		print type(config)
-		print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \n'
 		command_list = self._make_build_commands(config)
-		print "Build steps:"
-		for cmd in command_list:
-			print cmd
-		print '\n'
-		print 'Starting : \n'
 		for cmd in command_list:
 			cmd.execute()
 
 	@staticmethod
-	def _installed_pkg(pip):
+	def _installed_pkg():
+		pip = "bin/pip"
 		cmd = BuildCommand(pip, 'freeze')
 		pkg_list = cmd.execute()
-		return str(pkg_list).split('\n')
+		return str(pkg_list).split('\n')[:-1]
+
+	@staticmethod
+	def _upgradable(pkg, check):
+		installed = {}
+		for item in check:
+			splited = item.split("==")
+			if len(splited) > 1:
+				p = {splited[0]: splited[1]}
+				installed.update(p)
+		pkg_name = pkg.split('==')[0]
+		current_version = pkg.split('==')[1]
+
+		return True if installed.get(pkg_name, None) < current_version else False
 
 	# TODO 1: refactor this tones of ctrl-c/ctrl-v
 	# TODO 2: make install/update action related on package versions
@@ -150,22 +140,26 @@ class StackEnvBuilder(object):
 	def install_requirements(self):
 		config = self._parse_config()
 		pip = "bin/pip"
-		check_list = self._installed_pkg(pip)
-		print "Installed : %s" % check_list
+		check_list = self._installed_pkg()
 		package_list = config.packages
 		to_install = []
 		to_update = []
+
 		for pkg in package_list['commons']:
 			if pkg not in check_list:
 				to_install.append(pkg)
-			else:
+			elif self._upgradable(pkg, check_list):
 				to_update.append(pkg)
+			else:
+				continue
 
 		for pkg in package_list['framework']:
 			if pkg not in check_list:
 				to_install.append(pkg)
-			else:
+			elif self._upgradable(pkg, check_list):
 				to_update.append(pkg)
+			else:
+				continue
 
 		for pkg in package_list['develop']:
 			if pkg not in check_list:
