@@ -17,7 +17,7 @@
       "var",
       "var/log",
       "var/log/supervisor",
-      "var/log/dbspath",
+      "var/dbspath",
       "var/proc",
       "etc",
       "apps"
